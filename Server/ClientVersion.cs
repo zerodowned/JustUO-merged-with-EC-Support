@@ -25,8 +25,7 @@ namespace Server
 		Regular,
 		UOTD,
 		God,
-		SA,
-        IsKRClient
+		SA
 	}
 
 	public class ClientVersion : IComparable, IComparer
@@ -47,11 +46,6 @@ namespace Server
 		public int Patch { get { return m_Patch; } }
 
 		public ClientType Type { get { return m_Type; } }
-
-        public bool IsEnhanced
-        {
-            get { return m_Type == ClientType.IsKRClient; }
-        }
 
 		public string SourceString { get { return m_SourceString; } }
 
@@ -196,25 +190,19 @@ namespace Server
 					}
 				}
 
-                #region Enhance Client
-                if (m_Major >= 6 && m_Revision >= 14 && m_Patch >= 3)
-                {
-                    m_Type = ClientType.SA;
-                }
-                else if (fmt.IndexOf("god") >= 0 || fmt.IndexOf("gq") >= 0)
-                {
-                    m_Type = ClientType.God;
-                }
-                else if (fmt.IndexOf("third dawn") >= 0 || fmt.IndexOf("uo:td") >= 0 || fmt.IndexOf("uotd") >= 0 ||
-                         fmt.IndexOf("uo3d") >= 0 || fmt.IndexOf("uo:3d") >= 0)
-                {
-                    m_Type = ClientType.UOTD;
-                }
-                else
-                {
-                    m_Type = ClientType.Regular;
-                }
-                #endregion
+				if (fmt.IndexOf("god") >= 0 || fmt.IndexOf("gq") >= 0)
+				{
+					m_Type = ClientType.God;
+				}
+				else if (fmt.IndexOf("third dawn") >= 0 || fmt.IndexOf("uo:td") >= 0 || fmt.IndexOf("uotd") >= 0 ||
+						 fmt.IndexOf("uo3d") >= 0 || fmt.IndexOf("uo:3d") >= 0)
+				{
+					m_Type = ClientType.UOTD;
+				}
+				else
+				{
+					m_Type = ClientType.Regular;
+				}
 			}
 			catch
 			{

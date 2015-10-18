@@ -52,15 +52,14 @@ namespace Server.Items
 
             return base.OnDragDrop(from, item);
         }
-        #region Enhance Client
-        public override bool OnDragDropInto(Mobile from, Item item, Point3D p, byte gridloc)
+
+        public override bool OnDragDropInto(Mobile from, Item item, Point3D p)
         {
             if (this.m_Boat == null || !this.m_Boat.Contains(from) || this.m_Boat.IsMoving)
                 return false;
 
-            return base.OnDragDropInto(from, item, p, gridloc);
+            return base.OnDragDropInto(from, item, p);
         }
-        #endregion
 
         public override bool CheckItemUse(Mobile from, Item item)
         {

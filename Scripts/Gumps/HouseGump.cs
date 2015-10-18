@@ -732,8 +732,6 @@ namespace Server.Prompts
 {
     public class RenamePrompt : Prompt
     {
-        // What dost thou wish the sign to say?
-        public override int MessageCliloc { get { return 501302; } }
         private readonly BaseHouse m_House;
         public RenamePrompt(BaseHouse house)
         {

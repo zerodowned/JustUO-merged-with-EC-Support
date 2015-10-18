@@ -1,55 +1,92 @@
-using System;
+#region Header
+// **********
+// ServUO - GumpEntry.cs
+// **********
+#endregion
+
+#region References
 using Server.Network;
+#endregion
 
 namespace Server.Gumps
 {
 	public abstract class GumpEntry
 	{
-		private Gump m_Parent;
+		//public virtual int X { get; set; }
+		//public virtual int Y { get; set; }
 
-		public GumpEntry()
-		{
-		}
-
-		protected void Delta( ref int var, int val )
-		{
-			if ( var != val )
-				var = val;
-		}
-
-		protected void Delta( ref bool var, bool val )
-		{
-			if ( var != val )
-				var = val;
-		}
-
-		protected void Delta( ref string var, string val )
-		{
-			if ( var != val )
-				var = val;
-		}
+		private Gump _Parent;
 
 		public Gump Parent
 		{
-			get
-			{
-				return m_Parent;
-			}
+			get { return _Parent; }
 			set
 			{
-				if ( m_Parent != value )
+				if (_Parent == value)
 				{
-					if ( m_Parent != null )
-						m_Parent.Remove( this );
+					return;
+				}
 
-					m_Parent = value;
+				if (_Parent != null)
+				{
+					_Parent.Remove(this);
+				}
 
-					m_Parent.Add( this );
+				_Parent = value;
+
+				if (_Parent != null)
+				{
+					_Parent.Add(this);
 				}
 			}
 		}
 
+		protected void Delta(ref int var, int val)
+		{
+			if (var == val)
+			{
+				return;
+			}
+
+			var = val;
+
+			if (_Parent != null)
+			{
+				_Parent.Invalidate();
+			}
+		}
+
+		protected void Delta(ref bool var, bool val)
+		{
+			if (var == val)
+			{
+				return;
+			}
+
+			var = val;
+
+			if (_Parent != null)
+			{
+				_Parent.Invalidate();
+			}
+		}
+
+		protected void Delta(ref string var, string val)
+		{
+			if (var == val)
+			{
+				return;
+			}
+
+			var = val;
+
+			if (_Parent != null)
+			{
+				_Parent.Invalidate();
+			}
+		}
+
 		public abstract string Compile();
-		public abstract void AppendTo( IGumpWriter disp );
+		public abstract void AppendTo(IGumpWriter disp);
 	}
 }

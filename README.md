@@ -1,3 +1,7 @@
-# justuo-with-ec-support
+![ScreenShot](JustUOlogo.png)
 
-uploaded copy of file by HawkEye found here: http://www.playuo.org/emu/index.php?resources/justuo-enhance-client-package.201/
+JustUO - http://www.playuo.org
+
+Advanced Ultima Online server emulation software.
+
+Come see our website and forums for more information!
