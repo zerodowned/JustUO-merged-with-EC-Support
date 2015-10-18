@@ -259,6 +259,9 @@ namespace Server.Gumps
 
         private class PricePerRentalPrompt : Prompt
         {
+            // Please enter the amount of gold that should be charged for this contract (ESC to cancel):
+            public override int MessageCliloc { get { return 1062365; } }
+
             private readonly VendorRentalContract m_Contract;
             public PricePerRentalPrompt(VendorRentalContract contract)
             {
@@ -480,6 +483,8 @@ namespace Server.Gumps
 
         private class ContractRenewalPricePrompt : Prompt
         {
+            // Enter contract renewal price:
+            public override int MessageCliloc { get { return 1062500; } }
             private readonly RentedVendor m_Vendor;
             public ContractRenewalPricePrompt(RentedVendor vendor)
             {

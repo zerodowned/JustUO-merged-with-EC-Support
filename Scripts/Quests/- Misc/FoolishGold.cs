@@ -36,16 +36,17 @@ namespace Server.Items
 
             return convert;
         }
-
-        public override bool DropToItem(Mobile from, Item target, Point3D p)
+        #region Enhance Client
+        public override bool DropToItem(Mobile from, Item target, Point3D p, byte gridloc)
         {
-            var convert = base.DropToItem(from, target, p);
+            var convert = base.DropToItem(from, target, p, gridloc);
 
             if (convert && Parent != from.Backpack)
                 ConvertItem(from);
 
             return convert;
         }
+        #endregion
 
         public virtual void ConvertItem(Mobile from)
         {
