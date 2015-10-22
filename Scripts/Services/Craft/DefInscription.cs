@@ -432,12 +432,6 @@ namespace Server.Engines.Craft
             #region OS-Edit for SA items
             if (Core.SA)
             {
-                index = this.AddCraft(typeof(GargoyleBook100), 1044294, 1113290, 60.0, 100.0, typeof(BlankScroll), 1044377, 40, 1044378);
-                this.AddRes(index, typeof(Beeswax), 1025154, 2, "You do not have enough beeswax.");
-				
-                index = this.AddCraft(typeof(GargoyleBook200), 1044294, 1113291, 72.0, 100.0, typeof(BlankScroll), 1044377, 40, 1044378);
-                this.AddRes(index, typeof(Beeswax), 1025154, 4, "You do not have enough beeswax.");
-
                 index = AddCraft(typeof(ScrollBinderDeed), 1044294, ("Scroll Binder"), 75.0, 100.0, typeof(WoodPulp), ("Wood Pulp"), 1, ("You do not have enough Wood Pulp")); //Todo check Clilocs
             }
             #endregion

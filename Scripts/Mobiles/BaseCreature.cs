@@ -3549,6 +3549,11 @@ namespace Server.Mobiles
 				list.Add(new TameEntry(from, this));
 			}
 
+            if (m_bControlled && m_ControlMaster == from && !m_bSummoned)
+            {
+                list.Add(new RenameEntry(from, this));
+            }
+
 			AddCustomContextEntries(from, list);
 
 			if (CanTeach && from.Alive)

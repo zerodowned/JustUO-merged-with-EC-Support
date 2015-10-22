@@ -1264,6 +1264,7 @@ namespace Server.Network
 		}
 	}
 
+    
 	public sealed class WorldItemSA : Packet
 	{
 		public WorldItemSA(Item item)
@@ -1315,6 +1316,47 @@ namespace Server.Network
 		}
 	}
 
+    public enum GraphicData : byte
+    {
+        TileData = 0x0,
+        BodyData = 0x1,
+        MultiData = 0x2
+    }
+
+    public sealed class WorldItemHS : Packet
+    {
+        public WorldItemHS(Item item)
+            : base(0xF3, 26)
+        {
+            int itemId = item.ItemID;
+
+            m_Stream.Write((short)1);
+            m_Stream.Write((byte)item.GraphicData);
+
+            m_Stream.Write((uint)item.Serial.Value);
+            m_Stream.Write((short)itemId);
+
+            m_Stream.Write((byte)item.Direction);
+
+            m_Stream.Write((short)item.Amount);
+            m_Stream.Write((short)item.Amount);
+
+            Point3D loc = item.Location;
+
+            m_Stream.Write((short)loc.X);
+            m_Stream.Write((short)loc.Y);
+            m_Stream.Write((sbyte)loc.Z);
+
+            m_Stream.Write((byte)item.Light);
+
+            m_Stream.Write((ushort)item.Hue);
+            m_Stream.Write((byte)item.GetPacketFlags());
+
+            m_Stream.Write((short)0x0); // 0 for new item, 1 for update
+        }
+    }
+
+    /*
 	public sealed class WorldItemHS : Packet
 	{
 		public WorldItemHS(Item item)
@@ -1367,6 +1409,7 @@ namespace Server.Network
 			m_Stream.Write((short)0x00); // ??
 		}
 	}
+     */
 
 	public sealed class LiftRej : Packet
 	{
@@ -1629,6 +1672,35 @@ namespace Server.Network
 			m_Stream.Write((short)unknown);
 		}
 	}
+
+    public class GraphicalEffect : Packet
+    {
+        public GraphicalEffect(EffectType type, Serial from, Serial to, int itemID, Point3D fromPoint, Point3D toPoint, int speed, int duration, bool fixedDirection, bool explode)
+            : this(type, from, to, itemID, fromPoint, toPoint, speed, duration, fixedDirection, explode ? 1 : 0)
+        {
+        }
+
+        public GraphicalEffect(EffectType type, Serial from, Serial to, int itemID, Point3D fromPoint, Point3D toPoint, int speed, int duration, bool fixedDirection, int explode)
+            : base(0x70, 28)
+        {
+            m_Stream.Write((byte)type);
+            m_Stream.Write((int)from);
+            m_Stream.Write((int)to);
+            m_Stream.Write((short)itemID);
+            m_Stream.Write((short)fromPoint.X);
+            m_Stream.Write((short)fromPoint.Y);
+            m_Stream.Write((sbyte)fromPoint.Z);
+            m_Stream.Write((short)toPoint.X);
+            m_Stream.Write((short)toPoint.Y);
+            m_Stream.Write((sbyte)toPoint.Z);
+            m_Stream.Write((byte)speed);
+            m_Stream.Write((byte)duration);
+            m_Stream.Write((byte)0);
+            m_Stream.Write((byte)0);
+            m_Stream.Write((bool)fixedDirection);
+            m_Stream.Write((byte)explode);
+        }
+    }
 
 	public class HuedEffect : Packet
 	{
@@ -2138,8 +2210,8 @@ m_Stream.Write( (int) renderMode );
 		{
 			m_Stream.Write(c.Serial);
 			m_Stream.Write((short)c.GumpID);
-            m_Stream.Write((short)c.MaxItems);
-			//m_Stream.Write((short)0x7D);
+            //m_Stream.Write((short)c.MaxItems);
+			m_Stream.Write((short)0x7D);
 		}
 	}
 
@@ -2228,9 +2300,6 @@ m_Stream.Write( (int) renderMode );
 
 				if (!child.Deleted && beholder.CanSee(child))
                 {
-                    #region Enhance Client
-                    ++written;
-                    #endregion
 
                     Point3D loc = child.Location;
 
@@ -2250,8 +2319,9 @@ m_Stream.Write( (int) renderMode );
                     #endregion
 					m_Stream.Write(beheld.Serial);
 					m_Stream.Write((ushort)(child.QuestItem ? Item.QuestItemHue : child.Hue));
-
-					++written;
+                    #region Enhance Client
+                    ++written;
+                    #endregion
 				}
 			}
 
@@ -2282,10 +2352,6 @@ m_Stream.Write( (int) renderMode );
 
 				if (!child.Deleted && beholder.CanSee(child))
 				{
-                    #region Enhance Client
-                    ++written;
-                    #endregion
-
 					Point3D loc = child.Location;
 
                     #region Enhance Client
@@ -2305,8 +2371,9 @@ m_Stream.Write( (int) renderMode );
                     #endregion
 					m_Stream.Write(beheld.Serial);
 					m_Stream.Write((ushort)(child.QuestItem ? Item.QuestItemHue : child.Hue));
-
-					++written;
+                    #region Enhance Client
+                    ++written;
+                    #endregion
 				}
 			}
 
@@ -2815,12 +2882,20 @@ m_Stream.Write( (int) renderMode );
 			m_Layout.Write((byte)0);
 			WritePacked(m_Layout);
 
+            m_Stream.Write((int)m_StringCount);
+
+            WritePacked(m_Strings);
+
+            PacketWriter.ReleaseInstance(m_Layout);
+            PacketWriter.ReleaseInstance(m_Strings);
+
 			m_Stream.Write(m_StringCount);
 
 			WritePacked(m_Strings);
 
 			PacketWriter.ReleaseInstance(m_Layout);
 			PacketWriter.ReleaseInstance(m_Strings);
+
 		}
 
 		private const int GumpBufferSize = 0x5000;

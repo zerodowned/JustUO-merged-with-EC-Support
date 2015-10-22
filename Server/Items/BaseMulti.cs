@@ -13,6 +13,7 @@
 #endregion
 
 #region References
+using Server.Network;
 using System;
 #endregion
 
@@ -47,6 +48,8 @@ namespace Server.Items
 		public BaseMulti(Serial serial)
 			: base(serial)
 		{ }
+
+        public override GraphicData GraphicData { get { return GraphicData.MultiData; } }
 
 		[CommandProperty(AccessLevel.GameMaster)]
 		public override int ItemID

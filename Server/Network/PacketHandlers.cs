@@ -963,7 +963,7 @@ namespace Server.Network
 				state.Send(new GodModeReply(pvSrc.ReadBoolean()));
 			}
 		}
-
+        #region Enhance Client
         public static void MenuResponse(NetState state, PacketReader pvSrc)
         {
             int serial = pvSrc.ReadInt32();
@@ -1020,7 +1020,7 @@ namespace Server.Network
                 }
                 catch (Exception e)
                 {
-                    //ConsoleLog.WriteLine("Exception disarmed in AsciiPrompt response {0}, type {1}: {2}", state.Mobile, type, e);
+                    Console.WriteLine("Exception disarmed in AsciiPrompt response {0}, type {1}: {2}", state.Mobile, type, e);
                 }
             }
         }
@@ -1055,12 +1055,13 @@ namespace Server.Network
                 }
                 catch (Exception e)
                 {
-                    //ConsoleLog.WriteLine("Exception disarmed in UnicodePrompt response {0}, type {1}: {2}", state.Mobile, type, e);
+                    Console.WriteLine("Exception disarmed in UnicodePrompt response {0}, type {1}: {2}", state.Mobile, type, e);
                 }
             }
         }
+        #endregion
 
-		public static void ProfileReq(NetState state, PacketReader pvSrc)
+        public static void ProfileReq(NetState state, PacketReader pvSrc)
 		{
 			int type = pvSrc.ReadByte();
 			Serial serial = pvSrc.ReadInt32();

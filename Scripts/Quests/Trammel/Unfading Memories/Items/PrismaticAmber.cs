@@ -46,7 +46,7 @@ namespace Server.Items
 
             return ret;
         }
-        #region Enhance Client
+
         public override bool DropToItem(Mobile from, Item target, Point3D p, byte gridloc)
         {
             var ret = base.DropToItem(from, target, p, gridloc);
@@ -56,7 +56,6 @@ namespace Server.Items
 
             return ret;
         }
-        #endregion
 
         public virtual void DestroyItem(Mobile from)
         {

@@ -21,7 +21,8 @@ namespace Server.Multis
 
                 if (entry.m_Flags == 0)
                 {
-                    Item item = new Static((int)entry.m_ItemID);
+                    //Item item = new Static((int)entry.m_ItemID);
+                    Item item = new Static(entry.m_ItemID & TileData.MaxItemValue);
 
                     item.MoveToWorld(new Point3D(this.X + entry.m_OffsetX, this.Y + entry.m_OffsetY, this.Z + entry.m_OffsetZ), this.Map);
 

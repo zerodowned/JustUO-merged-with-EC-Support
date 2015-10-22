@@ -10,8 +10,10 @@ namespace Server.Multis
         private readonly int[] m_MultiTable;
         public ComponentVerification()
         {
-            this.m_ItemTable = this.CreateTable(0x10000);
-            this.m_MultiTable = this.CreateTable(0x4000);
+            m_ItemTable = CreateTable(0x10000);
+            m_MultiTable = CreateTable(0x8000);
+            //this.m_ItemTable = this.CreateTable(0x10000);
+            //this.m_MultiTable = this.CreateTable(0x4000);
 
             this.LoadItems("Data/Components/walls.txt", "South1", "South2", "South3", "Corner", "East1", "East2", "East3", "Post", "WindowS", "AltWindowS", "WindowE", "AltWindowE", "SecondAltWindowS", "SecondAltWindowE");
             this.LoadItems("Data/Components/teleprts.txt", "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12", "F13", "F14", "F15", "F16");

@@ -172,7 +172,18 @@ namespace Server.Gumps
 
         private static readonly int[] m_FoundationNumbers = (Core.ML ? new int[]
         {
-            20, 189, 765, 65, 101, 0x2DF7, 0x2DFB, 0x3672, 0x3676
+            	// Default
+				20, 189, 765, 65, 101,
+
+				// Mondain's Legacy
+				11767, 11771, 11207, 11715,
+
+				// 9th Anniversary
+				13938, 13942,
+
+				// Stygian Abyss
+				16806, 16732
+            //20, 189, 765, 65, 101, 0x2DF7, 0x2DFB, 0x3672, 0x3676, 0x41A6, 0x415C
         } : new int[]
             {
                 20, 189, 765, 65, 101
@@ -472,13 +483,22 @@ namespace Server.Gumps
                     }
                 case HouseGumpPageAOS.ChangeFoundation:
                     {
-                        for (int i = 0; i < m_FoundationNumbers.Length; ++i)
-                        {
-                            int x = 15 + ((i % 5) * 80);
-                            int y = 180 + ((i / 5) * 100);
+                        int index = 0;
 
-                            this.AddButton(x, y, 4005, 4007, this.GetButtonID(8, i), GumpButtonType.Reply, 0);
-                            this.AddItem(x + 25, y, m_FoundationNumbers[i]);
+                        for (int i = 0; i < 2; ++i)
+                        {
+                            AddPage(i + 1);
+
+                            AddButton(10, 360, 4005, 4007, 0, GumpButtonType.Page, ((i + 1) % 2) + 1);
+
+                            for (int j = 0; j < 10 && index < m_FoundationNumbers.Length; ++j)
+                            {
+                                int x = 15 + ((j % 5) * 80);
+                                int y = 150 + ((j / 5) * 100);
+
+                                this.AddButton(x, y, 4005, 4007, this.GetButtonID(8, index/*i*/), GumpButtonType.Reply, 0);
+                                this.AddItem(x + 25, y, m_FoundationNumbers[index++]/*[i]*/);
+                            }
                         }
 
                         break;
@@ -1302,20 +1322,32 @@ namespace Server.Gumps
 
                             if (Core.ML && index >= 5)
                             {
-                                switch( index )
+                                switch (index)
                                 {
                                     case 5:
-                                        newType = FoundationType.ElvenGrey;
+                                        newType = FoundationType.ElvenStone;
                                         break;
                                     case 6:
-                                        newType = FoundationType.ElvenNatural;
+                                        newType = FoundationType.ElvenWood;
                                         break;
                                     case 7:
-                                        newType = FoundationType.Crystal;
+                                        newType = FoundationType.ElvenSimple;
                                         break;
                                     case 8:
+                                        newType = FoundationType.ElvenPlain;
+                                        break;
+                                    case 9:
+                                        newType = FoundationType.Crystal;
+                                        break;
+                                    case 10:
                                         newType = FoundationType.Shadow;
-                                        break; 
+                                        break;
+                                    case 11:
+                                        newType = FoundationType.GargishGreenMarble;
+                                        break;
+                                    case 12:
+                                        newType = FoundationType.GargishTwoToneStone;
+                                        break;
                                     default:
                                         return;
                                 }

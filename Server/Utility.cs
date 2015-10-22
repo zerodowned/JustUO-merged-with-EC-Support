@@ -14,6 +14,7 @@
 
 #region References
 using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
@@ -23,6 +24,8 @@ using System.Net.Sockets;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml;
+using Microsoft.Win32;
+using Server.Network;
 #endregion
 
 namespace Server
@@ -1240,7 +1243,7 @@ namespace Server
 						bytes.Append("  ");
 					}
 
-					if (c >= 0x20 && c < 0x7F)
+                    if (c >= 0x20 && c < 0x80 /*0x7F*/)
 					{
 						chars.Append((char)c);
 					}
@@ -1279,7 +1282,7 @@ namespace Server
 							bytes.Append("  ");
 						}
 
-						if (c >= 0x20 && c < 0x7F)
+						if (c >= 0x20 && c < 0x80 /*0x7F*/)
 						{
 							chars.Append((char)c);
 						}
