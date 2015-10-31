@@ -119,7 +119,7 @@ namespace Server
 
         #region Enhance Client
         /// <summary>
-        /// Unused.
+        /// Face Selecton EC
         /// </summary>
         Face = 0x0F,
         #endregion
@@ -3488,7 +3488,7 @@ namespace Server
 
 		public virtual int GetMaxUpdateRange()
 		{
-			return Core.GlobalUpdateRange;
+            return Core.GlobalUpdateRange;
 		}
 
 		public virtual int GetUpdateRange(Mobile m)

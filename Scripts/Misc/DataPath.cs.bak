@@ -13,7 +13,7 @@ namespace Server.Misc
         *  private static string CustomPath = @"C:\Program Files\Ultima Online";
         */
 	#if !MONO
-	private static readonly string CustomPath = @"C:\Program Files\EA Games\ToL Part 4";
+	private static readonly string CustomPath = StartupReader.GetClientPath();
 	#else
         private static readonly string CustomPath = Core.BaseDirectory + "/muls";
 	#endif

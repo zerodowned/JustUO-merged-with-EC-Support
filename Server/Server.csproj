@@ -208,6 +208,7 @@
     <Compile Include="Random.cs" />
     <Compile Include="Region.cs" />
     <Compile Include="ScriptCompiler.cs" />
+    <Compile Include="Season.cs" />
     <Compile Include="Sector.cs" />
     <Compile Include="SecureTrade.cs" />
     <Compile Include="Serial.cs" />

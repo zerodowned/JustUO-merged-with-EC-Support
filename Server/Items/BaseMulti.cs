@@ -191,10 +191,12 @@ namespace Server.Items
 
 			int version = reader.ReadInt();
 
-			if (version == 0 && ItemID >= 0x4000)
-			{
-				ItemID -= 0x4000;
-			}
+            if (version == 0)
+                ItemID -= 0x8000;
+			//if (version == 0 && ItemID >= 0x4000)
+			//{
+			//	ItemID -= 0x4000;
+			//}
 		}
 	}
 }

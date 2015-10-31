@@ -2269,7 +2269,6 @@ m_Stream.Write( (int) renderMode );
 			m_Stream.Write((ushort)item.Amount);
 			m_Stream.Write((short)item.X);
 			m_Stream.Write((short)item.Y);
-            //m_Stream.Write((byte)0); // Grid Location?
             #region Enhance Client
             m_Stream.Write((byte)item.GridLocation);
             #endregion
@@ -2365,7 +2364,6 @@ m_Stream.Write( (int) renderMode );
 					m_Stream.Write((ushort)child.Amount);
 					m_Stream.Write((short)loc.m_X);
 					m_Stream.Write((short)loc.m_Y);
-					//m_Stream.Write((byte)0); // Grid Location?
                     #region Enhance Client
                     m_Stream.Write((byte)child.GridLocation);
                     #endregion
@@ -2689,6 +2687,18 @@ m_Stream.Write( (int) renderMode );
 		public MultiTargetReqHS(MultiTarget t)
 			: base(0x99, 30)
 		{
+            m_Stream.Write((bool)t.AllowGround);
+            m_Stream.Write((int)t.TargetID);
+            m_Stream.Write((byte)t.Flags);
+
+            m_Stream.Fill();
+
+            m_Stream.Seek(18, SeekOrigin.Begin);
+            m_Stream.Write((short)t.MultiID);
+            m_Stream.Write((short)t.Offset.X);
+            m_Stream.Write((short)t.Offset.Y);
+            m_Stream.Write((short)t.Offset.Z);
+            /*
 			m_Stream.Write(t.AllowGround);
 			m_Stream.Write(t.TargetID);
 			m_Stream.Write((byte)t.Flags);
@@ -2700,6 +2710,7 @@ m_Stream.Write( (int) renderMode );
 			m_Stream.Write((short)t.Offset.X);
 			m_Stream.Write((short)t.Offset.Y);
 			m_Stream.Write((short)t.Offset.Z);
+             */
 		}
 	}
 
@@ -5160,6 +5171,36 @@ m_Stream.Write( (int) renderMode );
         Moongate = 0x0B,
         Shop = 0x0C,
         Player = 0x0D,
+    }
+
+    public sealed class DisplayWaypoint : Packet
+    {
+        public DisplayWaypoint(Serial serial, int x, int y, int z, int mapID, /*int type*/WaypointType type, string name)
+            : base(0xE5)
+        {
+            this.EnsureCapacity(25);
+
+            m_Stream.Write((int)serial);
+
+            m_Stream.Write((short)x);
+            m_Stream.Write((short)y);
+            m_Stream.Write((sbyte)z);
+            m_Stream.Write((byte)mapID); //map 
+
+            m_Stream.Write((ushort)type);
+            //m_Stream.Write((short)type); //type 
+
+            m_Stream.Write((short)0);
+
+            if (type.Equals(1))
+                m_Stream.Write((int)1046414);
+            else
+                m_Stream.Write((int)1062613);
+
+            m_Stream.WriteLittleUniNull(name);
+
+            m_Stream.Write((short)0); // terminate 
+        }
     }
 
     public class KRDisplayWaypoint : Packet
